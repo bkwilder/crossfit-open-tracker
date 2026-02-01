@@ -428,7 +428,8 @@
 const DATA_KEY = 'sccf_open_2026';
 const API_KEY  = 'sccf_api_url';
 
-let apiUrl = localStorage.getItem(API_KEY) || '';
+const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbwBbiUd_c32AaUouQ67vZ50o6zX29K_zaG3VT8-UPYNYP3lYTdQ2rTMcIRxKN-07U0J/exec';
+let apiUrl = localStorage.getItem(API_KEY) || DEFAULT_API_URL;
 
 // Populate the settings field on load
 window.addEventListener('DOMContentLoaded', () => {
