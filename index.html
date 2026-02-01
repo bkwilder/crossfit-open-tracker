@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sunshine City CrossFit - 2025 Open Tracker</title>
+<title>Sunshine City CrossFit - 2026 Open Tracker</title>
 <style>
   :root {
     --dark: #2e2e2e;
@@ -145,6 +145,7 @@
   .btn-orange { background: var(--orange); color: var(--white); }
   .btn-danger { background: #d9534f; color: var(--white); }
   .btn-sm { padding: 4px 12px; font-size: 0.8rem; }
+  .btn-edit { background: var(--teal); color: var(--white); }
 
   table {
     width: 100%;
@@ -303,7 +304,7 @@
 
 <header>
   <img src="logo.png" alt="Sunshine City CrossFit">
-  <h1>2025 CrossFit Open <span>Tracker</span></h1>
+  <h1>2026 CrossFit Open <span>Tracker</span></h1>
 </header>
 
 <div class="status-bar">
@@ -424,7 +425,7 @@
 
 <script>
 // ── Config ──
-const DATA_KEY = 'sccf_open_2025';
+const DATA_KEY = 'sccf_open_2026';
 const API_KEY  = 'sccf_api_url';
 
 let apiUrl = localStorage.getItem(API_KEY) || '';
@@ -619,6 +620,18 @@ function togglePaid(id) {
   }
 }
 
+function editAthleteName(id) {
+  const data = loadData();
+  const a = data.athletes.find(x => x.id === id);
+  if (!a) return;
+  const newName = prompt('Edit athlete name:', a.name);
+  if (newName === null || newName.trim() === '') return;
+  a.name = newName.trim();
+  saveData(data);
+  renderAll();
+  apiPost('updateAthlete', { id, name: a.name });
+}
+
 function toggleTeam(id) {
   const data = loadData();
   const a = data.athletes.find(x => x.id === id);
@@ -661,6 +674,7 @@ function renderAthletes() {
         </span>
       </td>
       <td>
+        <button class="btn btn-edit btn-sm" onclick="editAthleteName('${a.id}')">Edit</button>
         <button class="btn btn-danger btn-sm" onclick="removeAthlete('${a.id}')">Remove</button>
       </td>
     </tr>
@@ -959,7 +973,7 @@ function exportData() {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'sccf-open-2025-backup.json';
+  a.download = 'sccf-open-2026-backup.json';
   a.click();
 }
 
